@@ -196,7 +196,7 @@ function gotStream(stream) {
   toneChange();
   muteChange();
   signalSelect.onchange();
-};
+}
 
 function error() {
     alert('Stream generation failed.');
@@ -264,12 +264,12 @@ function init(){
   visualSelect.onchange = function() {
     window.cancelAnimationFrame(drawVisual);
     visualize();
-  }
+  };
 
   mathSelect.onchange = function() {
     window.cancelAnimationFrame(drawVisual);
     visualize();  
-  }
+  };
   
   audio_file.onchange = function(){
     console.log("audio_file onchange");
@@ -293,10 +293,10 @@ function init(){
 
   playFileSelect.onclick = function(){
     console.log("playFileSelect.onclick");
-    if (playerBuffer == null) return;
+    if (playerBuffer === null) return;
     playFile = !playFile;
-    updateButton(playFileSelect, "Play", playFile)
-    if (playerSourceNode != null) {
+    updateButton(playFileSelect, "Play", playFile);
+    if (playerSourceNode !== null) {
       playerSourceNode.stop();
       playerSourceNode.disconnect(0);
       playerSourceNode = null;
@@ -309,111 +309,13 @@ function init(){
       playerSourceNode.connect(merger);            
       playerSourceNode.start();
     }         
-  }
+  };
   
   toneSelect.onchange = function() {
     toneChange();
-  }
+  };
 
-  // default template changed
-  signalSelect.onchange = function(){
-    var key = signalSelect.value;
-    var idx = signalSelect.selectedIndex;
-    var signal = signals[idx]; 
-    console.log("signal "+signal.key + " samples " + signal.value.length);
-    var values = String(signal.value).split(",");
-    var value = "";
-    for (var i=0; i < values.length; i++){
-      value += values[i];
-      if (i < values.length-1) value += '\n';
-    }
-    templateSelect.value = value;
-    filterChange();
-    playBufferUpdate();
-  }
-
-  toneShapeSelect.onchange = function() {
-    toneChange();
-  }
-
-  timeScaleSelect.onchange = function() {
-    timeChange();
-  }
-
-  ampScaleSelect.onchange = function() {
-    ampChange();
-  }
-
-  triggerModeSelect.onchange = function() {
-    triggerChange();  
-  }
-
-
-  triggerLevelInput.oninput = function() {
-    triggerChange();  
-  }
-
-  triggerThresInput.oninput = function() {
-    triggerChange();  
-  }
-
-  fftmindb.oninput = function() {
-    fftChange();  
-  }
-
-  fftmaxdb.oninput = function(){
-    fftChange();
-  }
-
-  fftsmooth.oninput = function(){
-    fftChange();
-  }
-  
-  filterSelect.onchange = function() {
-    filterChange();
-  }
-
-  filterQualityInput.oninput = function() {
-    filterChange();
-  }
-
-  timeOfsInput.oninput = function(){
-    timeChange();
-  }
-
-  filterFreqInput.oninput = function() {  
-    filterChange();
-    playBufferUpdate();
-  }
-
-  filterGainInput.oninput = function() {
-    filterChange();
-  }
-
-  muteSelect.onclick = function() {
-    mute = !mute;
-    muteChange();  
-  }
-
-  templateSelect.oninput = function() {
-    console.log("template change");
-    filterChange();
-    playBufferUpdate();
-  }
-
-  playBufferSelect.onclick = function(){
-    playBuffer = !playBuffer;
-    playBufferUpdate();   
-    updateButton(playBufferSelect, "Play", playBuffer);
-  }
-
-  pauseSelect.onclick = function() {
-    pause = !pause;
-    updatePauseButton();
-    generateSaveLink();
-  }
-
-  
+    
   initAudio();  
 }
 
@@ -450,6 +352,8 @@ function findTrigger(dataArray){
   return 0;
 }
 
+
+//original used a set width. I think that's stupid, so I changed it to this.
 function getWidth() {
   if (self.innerHeight) {
     return self.innerWidth;
@@ -589,12 +493,6 @@ function visualize() {
 
         x += sliceWidth;
         if (x >= WIDTH) break;
-        if (x % 25 == 0){
-          canvasCtx.fillStyle = 'red';
-          canvasCtx.font = "bold 0px Arial";
-          var time = Math.round(onepixel * x * 10000)/100;          
-          canvasCtx.fillText(time, x-8,10);          
-        }        
       }
 
       //canvasCtx.lineTo(canvas.width, canvas.height/2);      
