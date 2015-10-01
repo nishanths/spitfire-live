@@ -554,7 +554,7 @@ function visualize() {
         }        
         x += barWidth;
       }
-    };
+    }
 
     drawFreq();
 
